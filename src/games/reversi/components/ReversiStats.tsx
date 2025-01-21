@@ -15,8 +15,12 @@ export function ReversiStats({ isVisible, onClose }: ReversiStatsProps) {
 
   if (!isVisible) return null;
 
-  const winPercentage = stats.totalGames ? 
-    Math.round((stats.wins / stats.totalGames) * 100) : 0;
+  // Calculate total games from the sum of wins, losses, and ties
+  const totalGames = stats.wins + stats.losses + stats.ties;
+  
+  // Calculate win percentage, avoiding division by zero
+  const winPercentage = totalGames > 0 ? 
+    Math.round((stats.wins / totalGames) * 100) : 0;
 
   const difficulties: Difficulty[] = ['easy', 'medium', 'hard'];
 
@@ -30,7 +34,7 @@ export function ReversiStats({ isVisible, onClose }: ReversiStatsProps) {
 
           <div className="grid grid-cols-4 gap-4 mb-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">{stats.totalGames}</div>
+              <div className="text-2xl font-bold text-white">{totalGames}</div>
               <div className="text-xs text-gray-400">Games Played</div>
             </div>
             <div className="text-center">

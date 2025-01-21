@@ -55,7 +55,7 @@ export default function Reversi() {
     if (!blackHasMove && !whiteHasMove) {
       const { black: playerScore, white: aiScore } = getScore();
       const result = playerScore > aiScore ? 'win' : 
-                    playerScore < aiScore ? 'loss' : 
+                    aiScore > playerScore ? 'loss' : 
                     'tie';
       updateStats(result, aiDifficulty);
       setGameOver(true);
