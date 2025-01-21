@@ -6,6 +6,7 @@ interface TreeSprite {
   name: string;
   price: number;
   imageUrl: string;
+  description: string;
 }
 
 interface RPGContextType {
@@ -20,28 +21,39 @@ interface RPGContextType {
 
 const defaultTrees: TreeSprite[] = [
   {
-    id: 'oak',
-    name: 'Oak Tree',
+    id: 'tree1-green',
+    name: 'Classic Green Tree',
     price: 100,
-    imageUrl: '/trees/oak.png'
+    imageUrl: '/Pixel Art Tree Pack/Tree 1/TREE 1_GREEN.png',
+    description: 'A beautiful classic green tree, perfect for beginners'
   },
   {
-    id: 'pine',
-    name: 'Pine Tree',
-    price: 200,
-    imageUrl: '/trees/pine.png'
+    id: 'tree4-teal',
+    name: 'Mystical Teal Tree',
+    price: 250,
+    imageUrl: '/Pixel Art Tree Pack/Tree 4/TREE 4_TEAL.png',
+    description: 'A magical teal-colored tree with a mystical aura'
   },
   {
-    id: 'cherry',
-    name: 'Cherry Blossom',
+    id: 'tree8-yellow',
+    name: 'Golden Autumn Tree',
     price: 500,
-    imageUrl: '/trees/cherry.png'
+    imageUrl: '/Pixel Art Tree Pack/Tree 8/TREE 8_YELLOWISH GREEN.png',
+    description: 'A majestic tree with golden autumn leaves'
   },
   {
-    id: 'maple',
-    name: 'Maple Tree',
+    id: 'tree11-sandy',
+    name: 'Desert Oasis Tree',
+    price: 750,
+    imageUrl: '/Pixel Art Tree Pack/Tree 11/TREE 11_SANDY GREEN.png',
+    description: 'A rare tree that thrives in sandy environments'
+  },
+  {
+    id: 'tree15-green',
+    name: 'Ancient Guardian Tree',
     price: 1000,
-    imageUrl: '/trees/maple.png'
+    imageUrl: '/Pixel Art Tree Pack/Tree 15/TREE 15_GREEN.png',
+    description: 'An ancient tree said to protect the forest'
   }
 ];
 
