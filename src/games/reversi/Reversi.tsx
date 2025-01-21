@@ -102,6 +102,39 @@ export default function Reversi() {
     }, 500);
   };
 
+  const canPlayerMove = (currentBoard: Board, player: Player) => {
+    return hasValidMove(currentBoard, player);
+  };
+
+  const handleSkipTurn = () => {
+    if (currentPlayer === 'white' || gameOver) return;
+    setCurrentPlayer('white');
+    
+    // AI's turn after skip
+    setTimeout(() => {
+      const [_, aiMove] = minimax(
+        board,
+        AI_DEPTH[aiDifficulty as keyof typeof AI_DEPTH],
+        -Infinity,
+        Infinity,
+        true,
+        'white'
+      );
+
+      if (aiMove) {
+        const [aiRow, aiCol] = aiMove;
+        const finalBoard = makeMove(aiRow, aiCol, 'white', board);
+        setBoard(finalBoard);
+        
+        if (!checkGameOver(finalBoard)) {
+          setCurrentPlayer('black');
+        }
+      } else {
+        checkGameOver(board);
+      }
+    }, 500);
+  };
+
   return (
     <GameLayout title="Reversi">
       <div className="w-full max-w-2xl">
@@ -137,6 +170,17 @@ export default function Reversi() {
           currentPlayer={currentPlayer}
           onMove={handleMove}
         />
+
+        {currentPlayer === 'black' && !gameOver && !canPlayerMove(board, 'black') && (
+          <div className="mt-4 flex justify-center">
+            <button
+              onClick={handleSkipTurn}
+              className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition-colors"
+            >
+              Skip Turn (No Valid Moves)
+            </button>
+          </div>
+        )}
 
         <div className="mt-6 flex justify-center space-x-8 text-white">
           <div>Black (You): {getScore().black}</div>
