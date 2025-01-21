@@ -24,39 +24,31 @@ const DEFAULT_STATS: ReversiStats = {
 export function useReversiStats() {
   const { username, scores, addScore } = useUser();
 
-  const updateStats = useCallback((
-    playerScore: number,
-    aiScore: number,
-    difficulty: Difficulty
-  ) => {
+  const updateStats = useCallback((result: 'win' | 'loss' | 'tie', difficulty: Difficulty) => {
     if (!username) return;
 
-    const currentStats = (scores.reversi?.stats || DEFAULT_STATS) as ReversiStats;
+    const currentStats = scores.reversi?.stats || DEFAULT_STATS;
     const newStats = { ...currentStats };
-    
+
     // Update total stats
     newStats.totalGames++;
-    if (playerScore > aiScore) {
-      newStats.wins++;
-    } else if (aiScore > playerScore) {
-      newStats.losses++;
-    } else {
-      newStats.ties++;
-    }
+    if (result === 'win') newStats.wins++;
+    else if (result === 'loss') newStats.losses++;
+    else newStats.ties++;
 
-    // Update difficulty-specific stats
+    // Update difficulty specific stats
     const diffStats = newStats.byDifficulty[difficulty];
     diffStats.games++;
-    if (playerScore > aiScore) {
-      diffStats.wins++;
-    } else if (aiScore > playerScore) {
-      diffStats.losses++;
-    } else {
-      diffStats.ties++;
-    }
+    if (result === 'win') diffStats.wins++;
+    else if (result === 'loss') diffStats.losses++;
+    else diffStats.ties++;
 
+    // Add score to user context
     addScore('reversi', { stats: newStats });
   }, [username, scores, addScore]);
 
-  return { updateStats };
+  return {
+    stats: scores.reversi?.stats || DEFAULT_STATS,
+    updateStats
+  };
 }

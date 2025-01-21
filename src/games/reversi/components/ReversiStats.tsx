@@ -1,6 +1,7 @@
 import React from 'react';
+import { useReversiStats } from '../hooks/useReversiStats';
 import { useUser } from '../../../context/UserContext';
-import { ReversiStats as ReversiStatsType, Difficulty } from '../types';
+import { Difficulty } from '../types';
 import clsx from 'clsx';
 
 interface ReversiStatsProps {
@@ -9,18 +10,8 @@ interface ReversiStatsProps {
 }
 
 export function ReversiStats({ isVisible, onClose }: ReversiStatsProps) {
-  const { username, scores } = useUser();
-  const stats = (scores.reversi?.stats || {
-    totalGames: 0,
-    wins: 0,
-    losses: 0,
-    ties: 0,
-    byDifficulty: {
-      easy: { games: 0, wins: 0, losses: 0, ties: 0 },
-      medium: { games: 0, wins: 0, losses: 0, ties: 0 },
-      hard: { games: 0, wins: 0, losses: 0, ties: 0 }
-    }
-  }) as ReversiStatsType;
+  const { username } = useUser();
+  const { stats } = useReversiStats();
 
   if (!isVisible) return null;
 

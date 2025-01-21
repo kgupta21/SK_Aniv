@@ -23,17 +23,17 @@ export const AI_DEPTH: AIConfig = {
   hard: 6
 };
 
+export interface DifficultyStats {
+  games: number;
+  wins: number;
+  losses: number;
+  ties: number;
+}
+
 export interface ReversiStats {
   totalGames: number;
   wins: number;
   losses: number;
   ties: number;
-  byDifficulty: {
-    [K in Difficulty]: {
-      games: number;
-      wins: number;
-      losses: number;
-      ties: number;
-    }
-  };
+  byDifficulty: Record<Difficulty, DifficultyStats>;
 }
