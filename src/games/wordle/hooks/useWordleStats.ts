@@ -8,7 +8,8 @@ const DEFAULT_STATS: WordleStats = {
   gamesPlayed: 0,
   currentStreak: 0,
   maxStreak: 0,
-  averageGuesses: 0
+  averageGuesses: 0,
+  lastPlayedDate: ''
 };
 
 export function useWordleStats() {
@@ -18,7 +19,7 @@ export function useWordleStats() {
     if (!username) return;
 
     const today = new Date().toISOString().split('T')[0];
-    const currentStats = (scores.wordle?.stats || DEFAULT_STATS) as WordleStats;
+    const currentStats = scores.wordle?.stats || DEFAULT_STATS;
     
     // Calculate new stats
     const newStats = { ...currentStats };
@@ -31,24 +32,28 @@ export function useWordleStats() {
       newStats.wins++;
 
       // Update streak
-      if (today === currentStats.lastPlayedDate) {
-        newStats.currentStreak++;
-      } else {
-        newStats.currentStreak = 1;
-      }
+      newStats.currentStreak = today === currentStats.lastPlayedDate 
+        ? (currentStats.currentStreak || 0) + 1 
+        : 1;
+      
       newStats.maxStreak = Math.max(newStats.currentStreak, currentStats.maxStreak || 0);
 
       // Update average guesses
-      const totalGuesses = newStats.guesses.reduce((sum, count, index) => 
+      const totalGuesses = newStats.guesses.reduce((sum: number, count: number, index: number) => 
         sum + (count * (index + 1)), 0);
-      newStats.averageGuesses = totalGuesses / newStats.wins;
+      newStats.averageGuesses = Number((totalGuesses / newStats.wins).toFixed(2));
     } else {
       newStats.currentStreak = 0;
     }
 
     newStats.lastPlayedDate = today;
+
+    // Add score to user context
     addScore('wordle', { stats: newStats });
   }, [username, scores, addScore]);
 
-  return { updateStats };
+  return { 
+    stats: scores.wordle?.stats || DEFAULT_STATS,
+    updateStats 
+  };
 }
