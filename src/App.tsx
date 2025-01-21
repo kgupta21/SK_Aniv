@@ -13,6 +13,9 @@ import HomePage from './components/HomePage';
 import { UserProvider } from './context/UserContext';
 import { MobileNav } from './components/MobileNav';
 import clsx from 'clsx';
+import { RPGProvider } from './context/RPGContext';
+import { TreeStore } from './components/RPG/TreeStore';
+import { BackgroundTrees } from './components/RPG/BackgroundTrees';
 
 function NavLink({ to, children }: { to: string; children: React.ReactNode }) {
   return (
@@ -33,60 +36,17 @@ export default function App() {
 
   return (
     <UserProvider>
-      <BrowserRouter>
-        <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-900">
-          <nav className="bg-white/10 backdrop-blur-sm border-b border-white/20">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-16">
-                <Link to="/" className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full overflow-hidden">
-                    <img 
-                      src="https://i.postimg.cc/YCxyfPrY/image.png" 
-                      alt="Husky Logo"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <span className="text-xl font-bold text-white">SK's Games</span>
-                </Link>
-
-                <div className="hidden md:flex space-x-4">
-                  <NavLink to="/wordle">Wordle</NavLink>
-                  <NavLink to="/minesweeper">Minesweeper</NavLink>
-                  <NavLink to="/reversi">Reversi</NavLink>
-                  <NavLink to="/todos">Todo List</NavLink>
-                  <NavLink to="/calendar">Calendar</NavLink>
-                  <NavLink to="/notes">Notes</NavLink>
-                  <NavLink to="/h3">H3 Podcast</NavLink>
-                  <NavLink to="/racing">Racing</NavLink>
-                </div>
-
-                <button
-                  onClick={() => setIsNavOpen(true)}
-                  className="md:hidden p-2 text-white hover:text-purple-200 transition-colors"
-                >
-                  <Menu size={24} />
-                </button>
-              </div>
+      <RPGProvider>
+        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 relative">
+          <BackgroundTrees />
+          <div className="container mx-auto px-4 py-8">
+            <div className="grid gap-8 md:grid-cols-[2fr,1fr]">
+              <TodoList />
+              <TreeStore />
             </div>
-          </nav>
-
-          <MobileNav isOpen={isNavOpen} onClose={() => setIsNavOpen(false)} />
-
-          <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/wordle" element={<Wordle />} />
-              <Route path="/minesweeper" element={<Minesweeper />} />
-              <Route path="/reversi" element={<Reversi />} />
-              <Route path="/todos" element={<TodoList />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/notes" element={<Notes />} />
-              <Route path="/h3" element={<H3H3Tribute />} />
-              <Route path="/racing" element={<RacingGames />} />
-            </Routes>
-          </main>
+          </div>
         </div>
-      </BrowserRouter>
+      </RPGProvider>
     </UserProvider>
   );
 }

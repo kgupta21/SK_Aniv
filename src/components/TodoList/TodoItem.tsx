@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pencil, Trash2, Check, X } from 'lucide-react';
 import { Todo, PriorityLevel } from '../../types/todo';
+import { useRPG } from '../../context/RPGContext';
 import clsx from 'clsx';
 
 interface TodoItemProps {
@@ -14,6 +15,28 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(todo.text);
   const [editPriority, setEditPriority] = useState<PriorityLevel>(todo.priority);
+  const [showReward, setShowReward] = useState(false);
+  const { addCurrency } = useRPG();
+
+  // Calculate reward based on priority
+  const getReward = (priority: PriorityLevel): number => {
+    switch (priority) {
+      case 'high': return 100;
+      case 'medium': return 50;
+      case 'low': return 25;
+      default: return 25;
+    }
+  };
+
+  const handleToggle = () => {
+    if (!todo.completed) {
+      const reward = getReward(todo.priority);
+      addCurrency(reward);
+      setShowReward(true);
+      setTimeout(() => setShowReward(false), 2000);
+    }
+    onToggle(todo.id);
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,40 +86,48 @@ export function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemProps) {
   }
 
   return (
-    <div className={clsx(
-      'flex items-center gap-3 p-3 rounded-lg transition-colors',
-      'bg-white/10 hover:bg-white/20'
-    )}>
-      <input
-        type="checkbox"
-        checked={todo.completed}
-        onChange={() => onToggle(todo.id)}
-        className="w-5 h-5 rounded border-white/20"
-      />
-      <span className={clsx(
-        'flex-1 text-white transition-opacity',
-        todo.completed && 'line-through opacity-50'
+    <div className="relative">
+      <div className={clsx(
+        'flex items-center gap-3 p-3 rounded-lg transition-colors',
+        'bg-white/10 hover:bg-white/20'
       )}>
-        {todo.text}
-      </span>
-      <span className={clsx(
-        'px-2 py-1 rounded text-xs font-medium',
-        priorityColors[todo.priority]
-      )}>
-        {todo.priority}
-      </span>
-      <button
-        onClick={() => setIsEditing(true)}
-        className="p-1 text-white/60 hover:text-white"
-      >
-        <Pencil size={20} />
-      </button>
-      <button
-        onClick={() => onDelete(todo.id)}
-        className="p-1 text-white/60 hover:text-red-400"
-      >
-        <Trash2 size={20} />
-      </button>
+        <input
+          type="checkbox"
+          checked={todo.completed}
+          onChange={handleToggle}
+          className="w-5 h-5 rounded border-white/20"
+        />
+        <span className={clsx(
+          'flex-1 text-white transition-opacity',
+          todo.completed && 'line-through opacity-50'
+        )}>
+          {todo.text}
+        </span>
+        <span className={clsx(
+          'px-2 py-1 rounded text-xs font-medium',
+          priorityColors[todo.priority]
+        )}>
+          {todo.priority}
+        </span>
+        <button
+          onClick={() => setIsEditing(true)}
+          className="p-1 text-white/60 hover:text-white"
+        >
+          <Pencil size={20} />
+        </button>
+        <button
+          onClick={() => onDelete(todo.id)}
+          className="p-1 text-white/60 hover:text-red-400"
+        >
+          <Trash2 size={20} />
+        </button>
+      </div>
+      
+      {showReward && (
+        <div className="absolute top-0 right-0 transform -translate-y-full p-2 bg-yellow-400 text-black rounded-lg animate-bounce">
+          +{getReward(todo.priority)} 🪙
+        </div>
+      )}
     </div>
   );
 }
