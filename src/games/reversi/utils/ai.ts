@@ -1,4 +1,4 @@
-import { Board, Player, AIConfig, AI_DEPTH } from '../types';
+import { Board, Player } from '../types';
 import { isValidMove, makeMove } from './gameLogic';
 
 export function evaluateBoard(board: Board, player: Player): number {

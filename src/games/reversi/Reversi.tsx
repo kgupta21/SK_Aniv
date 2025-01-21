@@ -3,7 +3,7 @@ import { GameLayout } from '../../components/GameLayout';
 import { ReversiBoard } from './components/ReversiBoard';
 import { DifficultySelector } from '../minesweeper/components/DifficultySelector';
 import { ReversiStats } from './components/ReversiStats';
-import { Board, Player, BOARD_SIZE, AIConfig, AI_DEPTH, Difficulty } from './types';
+import { Board, Player, BOARD_SIZE, AI_DEPTH, Difficulty, Cell } from './types';
 import { isValidMove, makeMove, hasValidMove } from './utils/gameLogic';
 import { minimax } from './utils/ai';
 import { useReversiStats } from './hooks/useReversiStats';
@@ -39,8 +39,8 @@ export default function Reversi() {
   const getScore = () => {
     let black = 0;
     let white = 0;
-    board.forEach(row => {
-      row.forEach(cell => {
+    board.forEach((row: Cell[]) => {
+      row.forEach((cell: Cell) => {
         if (cell === 'black') black++;
         if (cell === 'white') white++;
       });
@@ -54,7 +54,10 @@ export default function Reversi() {
 
     if (!blackHasMove && !whiteHasMove) {
       const { black: playerScore, white: aiScore } = getScore();
-      updateStats(playerScore, aiScore, aiDifficulty);
+      const result = playerScore > aiScore ? 'win' : 
+                    playerScore < aiScore ? 'loss' : 
+                    'tie';
+      updateStats(result, aiDifficulty);
       setGameOver(true);
       return true;
     }
@@ -77,7 +80,7 @@ export default function Reversi() {
     setTimeout(() => {
       const [_, aiMove] = minimax(
         newBoard,
-        AI_DEPTH[aiDifficulty],
+        AI_DEPTH[aiDifficulty as keyof typeof AI_DEPTH],
         -Infinity,
         Infinity,
         true,
