@@ -1,10 +1,14 @@
 import React from 'react';
 import { useRPG } from '../../context/RPGContext';
+import { useLocation } from 'react-router-dom';
 
 export function BackgroundTrees() {
   const { selectedTree, ownedTrees } = useRPG();
+  const location = useLocation();
   
-  if (!selectedTree) return null;
+  // Don't show trees in game pages where they might interfere
+  const isGamePage = ['/reversi', '/minesweeper', '/wordle'].includes(location.pathname);
+  if (!selectedTree || isGamePage) return null;
   
   const tree = ownedTrees.find(t => t.id === selectedTree);
   if (!tree) return null;
@@ -18,7 +22,7 @@ export function BackgroundTrees() {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
       {treePositions.map((position, index) => (
         <img
           key={index}
@@ -30,6 +34,7 @@ export function BackgroundTrees() {
             bottom: position.bottom,
             transform: `scale(${position.scale}) rotate(${position.rotation}deg)`,
             transition: 'transform 0.3s ease-in-out',
+            imageRendering: 'pixelated'
           }}
         />
       ))}
