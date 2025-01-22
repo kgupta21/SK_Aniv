@@ -15,45 +15,52 @@ interface RPGContextType {
   ownedTrees: TreeSprite[];
   availableTrees: TreeSprite[];
   purchaseTree: (treeId: string) => void;
-  selectedTree: string | null;
-  setSelectedTree: (treeId: string | null) => void;
+  selectedTrees: Set<string>;
+  toggleSelectedTree: (treeId: string) => void;
 }
 
 const defaultTrees: TreeSprite[] = [
   {
     id: 'tree1-green',
     name: 'Classic Green Tree',
-    price: 100,
-    imageUrl: '/Pixel Art Tree Pack/Tree 1/TREE 1_GREEN.png',
-    description: 'A beautiful classic green tree, perfect for beginners'
+    price: 500,
+    imageUrl: '/Pixel Art Tree Pack/Tree 1/TREE 1_YELLOWISH GREEN.png',
+    description: 'A beautiful classic tree with vibrant yellowish-green leaves'
   },
   {
-    id: 'tree4-teal',
+    id: 'tree1-teal',
     name: 'Mystical Teal Tree',
-    price: 250,
-    imageUrl: '/Pixel Art Tree Pack/Tree 4/TREE 4_TEAL.png',
-    description: 'A magical teal-colored tree with a mystical aura'
+    price: 1000,
+    imageUrl: '/Pixel Art Tree Pack/Tree 1/TREE 1_TEAL.png',
+    description: 'A magical teal-colored variant of the classic tree'
   },
   {
     id: 'tree8-yellow',
     name: 'Golden Autumn Tree',
-    price: 500,
+    price: 2500,
     imageUrl: '/Pixel Art Tree Pack/Tree 8/TREE 8_YELLOWISH GREEN.png',
     description: 'A majestic tree with golden autumn leaves'
   },
   {
     id: 'tree11-sandy',
     name: 'Desert Oasis Tree',
-    price: 750,
+    price: 3750,
     imageUrl: '/Pixel Art Tree Pack/Tree 11/TREE 11_SANDY GREEN.png',
     description: 'A rare tree that thrives in sandy environments'
   },
   {
-    id: 'tree15-green',
+    id: 'tree15-teal',
     name: 'Ancient Guardian Tree',
-    price: 1000,
-    imageUrl: '/Pixel Art Tree Pack/Tree 15/TREE 15_GREEN.png',
-    description: 'An ancient tree said to protect the forest'
+    price: 5000,
+    imageUrl: '/Pixel Art Tree Pack/Tree 15/TREE 15_TEAL.png',
+    description: 'An ancient tree with mystical teal leaves'
+  },
+  {
+    id: 'tree15-red',
+    name: 'Crimson Guardian Tree',
+    price: 7500,
+    imageUrl: '/Pixel Art Tree Pack/Tree 15/TREE 15_RED.png',
+    description: 'A rare crimson variant of the ancient guardian tree'
   }
 ];
 
@@ -63,17 +70,17 @@ export function RPGProvider({ children }: { children: React.ReactNode }) {
   const { username } = useUser();
   const [currency, setCurrency] = useState(0);
   const [ownedTrees, setOwnedTrees] = useState<TreeSprite[]>([]);
-  const [selectedTree, setSelectedTree] = useState<string | null>(null);
+  const [selectedTrees, setSelectedTrees] = useState<Set<string>>(new Set());
 
   // Load saved state from localStorage when username changes
   useEffect(() => {
     if (username) {
       const savedState = localStorage.getItem(`rpg-state-${username}`);
       if (savedState) {
-        const { currency, ownedTrees, selectedTree } = JSON.parse(savedState);
+        const { currency, ownedTrees, selectedTrees } = JSON.parse(savedState);
         setCurrency(currency);
         setOwnedTrees(ownedTrees);
-        setSelectedTree(selectedTree);
+        setSelectedTrees(new Set(selectedTrees));
       }
     }
   }, [username]);
@@ -84,10 +91,10 @@ export function RPGProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(`rpg-state-${username}`, JSON.stringify({
         currency,
         ownedTrees,
-        selectedTree
+        selectedTrees: Array.from(selectedTrees)
       }));
     }
-  }, [username, currency, ownedTrees, selectedTree]);
+  }, [username, currency, ownedTrees, selectedTrees]);
 
   const addCurrency = (amount: number) => {
     setCurrency((prev: number) => prev + amount);
@@ -102,6 +109,18 @@ export function RPGProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const toggleSelectedTree = (treeId: string) => {
+    setSelectedTrees(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(treeId)) {
+        newSet.delete(treeId);
+      } else {
+        newSet.add(treeId);
+      }
+      return newSet;
+    });
+  };
+
   const availableTrees = defaultTrees.filter(
     (tree: TreeSprite) => !ownedTrees.some((owned: TreeSprite) => owned.id === tree.id)
   );
@@ -113,8 +132,8 @@ export function RPGProvider({ children }: { children: React.ReactNode }) {
       ownedTrees,
       availableTrees,
       purchaseTree,
-      selectedTree,
-      setSelectedTree
+      selectedTrees,
+      toggleSelectedTree
     }}>
       {children}
     </RPGContext.Provider>

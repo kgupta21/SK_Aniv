@@ -3,7 +3,14 @@ import { useRPG } from '../../context/RPGContext';
 import clsx from 'clsx';
 
 export function TreeStore() {
-  const { currency, availableTrees, ownedTrees, purchaseTree, selectedTree, setSelectedTree } = useRPG();
+  const { 
+    currency, 
+    availableTrees, 
+    ownedTrees, 
+    purchaseTree, 
+    selectedTrees,
+    toggleSelectedTree 
+  } = useRPG();
 
   return (
     <div className="p-4 bg-white/5 rounded-lg space-y-4">
@@ -57,18 +64,23 @@ export function TreeStore() {
 
       {ownedTrees.length > 0 && (
         <div className="mt-8">
-          <h3 className="text-lg font-bold text-white mb-4">Your Trees</h3>
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-lg font-bold text-white">Your Trees</h3>
+            <div className="text-sm text-white/70">
+              {selectedTrees.size} tree{selectedTrees.size !== 1 ? 's' : ''} selected
+            </div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {ownedTrees.map(tree => (
               <div
                 key={tree.id}
                 className={clsx(
                   'p-4 rounded-lg cursor-pointer transition-colors border',
-                  selectedTree === tree.id
+                  selectedTrees.has(tree.id)
                     ? 'bg-blue-500/30 border-blue-500'
                     : 'bg-white/10 border-white/10 hover:bg-white/20'
                 )}
-                onClick={() => setSelectedTree(tree.id)}
+                onClick={() => toggleSelectedTree(tree.id)}
               >
                 <div className="bg-black/30 rounded-lg p-2 flex justify-center">
                   <img
