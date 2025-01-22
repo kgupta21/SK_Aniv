@@ -9,7 +9,7 @@ import { minimax } from './utils/ai';
 import { useReversiStats } from './hooks/useReversiStats';
 import { BarChart, RotateCcw } from 'lucide-react';
 
-export default function Reversi() {
+export function Reversi() {
   const [board, setBoard] = useState<Board>([]);
   const [currentPlayer, setCurrentPlayer] = useState<Player>('black');
   const [aiDifficulty, setAiDifficulty] = useState<Difficulty>('medium');
@@ -215,3 +215,5 @@ export default function Reversi() {
     </GameLayout>
   );
 }
+
+export default Reversi;

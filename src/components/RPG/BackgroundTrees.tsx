@@ -27,7 +27,7 @@ export function BackgroundTrees() {
     <div 
       className="fixed inset-0 pointer-events-none overflow-hidden"
       style={{
-        zIndex: -1,
+        zIndex: 0,
         pointerEvents: 'none',
         userSelect: 'none',
         WebkitUserSelect: 'none'
