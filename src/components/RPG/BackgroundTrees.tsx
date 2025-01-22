@@ -24,7 +24,15 @@ export function BackgroundTrees() {
   }));
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+    <div 
+      className="fixed inset-0 pointer-events-none overflow-hidden"
+      style={{
+        zIndex: -1,
+        pointerEvents: 'none',
+        userSelect: 'none',
+        WebkitUserSelect: 'none'
+      }}
+    >
       {treePositions.map((position, index) => {
         const tree = selectedTreeSprites[position.treeIndex];
         return (
@@ -38,7 +46,10 @@ export function BackgroundTrees() {
               bottom: position.bottom,
               transform: `scale(${position.scale}) rotate(${position.rotation}deg)`,
               transition: 'transform 0.3s ease-in-out',
-              imageRendering: 'pixelated'
+              imageRendering: 'pixelated',
+              pointerEvents: 'none',
+              userSelect: 'none',
+              WebkitUserSelect: 'none'
             }}
           />
         );
