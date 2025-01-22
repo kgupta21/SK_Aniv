@@ -35,9 +35,9 @@ export default function App() {
   const [isNavOpen, setIsNavOpen] = useState(false);
 
   return (
-    <UserProvider>
-      <RPGProvider>
-        <BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
+        <RPGProvider>
           <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-900 relative">
             <BackgroundTrees />
             <nav className="bg-white/10 backdrop-blur-sm border-b border-white/20">
@@ -96,8 +96,8 @@ export default function App() {
               </Routes>
             </main>
           </div>
-        </BrowserRouter>
-      </RPGProvider>
-    </UserProvider>
+        </RPGProvider>
+      </UserProvider>
+    </BrowserRouter>
   );
 }
