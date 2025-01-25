@@ -11,6 +11,21 @@ export default function RacingGames() {
         
         <div className="grid gap-8">
           <div className="bg-white/5 p-6 rounded-lg">
+            <h2 className="text-xl text-white mb-4">Sweekruti's Theme</h2>
+            <div className="w-full flex justify-center">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://musiclab.chromeexperiments.com/Song-Maker/embed/5363175689682944" 
+                frameBorder="0" 
+                allowFullScreen
+                className="max-w-full"
+                title="Sweekruti's Theme"
+              />
+            </div>
+          </div>
+
+          <div className="bg-white/5 p-6 rounded-lg">
             <h2 className="text-xl text-white mb-4">Pako Highway</h2>
             <div className="w-full flex justify-center">
               <iframe 
@@ -46,7 +61,7 @@ export default function RacingGames() {
                 frameBorder="0" 
                 allowFullScreen
                 className="max-w-full"
-                title="Music Lab Song Maker"
+                title="Kartik's Techno Mario Beat"
               />
             </div>
           </div>
