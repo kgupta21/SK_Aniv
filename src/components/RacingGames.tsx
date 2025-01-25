@@ -35,6 +35,21 @@ export default function RacingGames() {
               />
             </div>
           </div>
+
+          <div className="bg-white/5 p-6 rounded-lg">
+            <h2 className="text-xl text-white mb-4">Music Lab</h2>
+            <div className="w-full flex justify-center">
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://musiclab.chromeexperiments.com/Song-Maker/embed/6055205153669120" 
+                frameBorder="0" 
+                allowFullScreen
+                className="max-w-full"
+                title="Music Lab Song Maker"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </GameLayout>
