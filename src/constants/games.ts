@@ -1,4 +1,4 @@
-import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car } from 'lucide-react';
+import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car, ArrowUpDown } from 'lucide-react';
 
 export const games = [
   {
@@ -21,6 +21,13 @@ export const games = [
     icon: CircleDot,
     path: '/reversi',
     color: 'from-purple-500 to-purple-700'
+  },
+  {
+    title: 'Platformer',
+    description: 'Endless runner platformer with procedurally generated levels.',
+    icon: ArrowUpDown,
+    path: '/platformer',
+    color: 'from-yellow-500 to-orange-700'
   },
   {
     title: 'Todo List',

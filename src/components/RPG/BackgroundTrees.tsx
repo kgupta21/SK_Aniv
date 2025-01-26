@@ -7,7 +7,7 @@ export function BackgroundTrees() {
   const location = useLocation();
   
   // Don't show trees in game pages where they might interfere
-  const isGamePage = ['/reversi', '/minesweeper', '/wordle'].includes(location.pathname);
+  const isGamePage = ['/reversi', '/minesweeper', '/wordle', '/platformer'].includes(location.pathname);
   if (selectedTrees.size === 0 || isGamePage) return null;
   
   // Get all selected trees

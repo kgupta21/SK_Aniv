@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react';
 import Wordle from './games/wordle/Wordle';
 import Minesweeper from './games/minesweeper/Minesweeper';
 import Reversi from './games/reversi/Reversi';
+import Platformer from './games/platformer/Platformer';
 import TodoList from './components/TodoList/TodoList';
 import Calendar from './components/Calendar/Calendar';
 import Notes from './components/Notes/Notes';
@@ -65,6 +66,7 @@ export default function App() {
                       <NavLink to="/wordle">Wordle</NavLink>
                       <NavLink to="/minesweeper">Minesweeper</NavLink>
                       <NavLink to="/reversi">Reversi</NavLink>
+                      <NavLink to="/platformer">Platformer</NavLink>
                       <NavLink to="/todos">Todo List</NavLink>
                       <NavLink to="/calendar">Calendar</NavLink>
                       <NavLink to="/notes">Notes</NavLink>
@@ -90,6 +92,7 @@ export default function App() {
                   <Route path="/wordle" element={<Wordle />} />
                   <Route path="/minesweeper" element={<Minesweeper />} />
                   <Route path="/reversi" element={<Reversi />} />
+                  <Route path="/platformer" element={<Platformer />} />
                   <Route path="/todos" element={
                     <div className="grid gap-8 md:grid-cols-[2fr,1fr]">
                       <TodoList />
