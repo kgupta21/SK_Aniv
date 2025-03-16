@@ -9,8 +9,21 @@ import { minimax } from './utils/ai';
 import { useReversiStats } from './hooks/useReversiStats';
 import { BarChart, RotateCcw } from 'lucide-react';
 
+const createInitialBoard = (): Board => {
+  const newBoard: Board = Array(BOARD_SIZE).fill(null)
+    .map(() => Array(BOARD_SIZE).fill(null));
+  
+  const mid = BOARD_SIZE / 2;
+  newBoard[mid - 1][mid - 1] = 'white';
+  newBoard[mid - 1][mid] = 'black';
+  newBoard[mid][mid - 1] = 'black';
+  newBoard[mid][mid] = 'white';
+  
+  return newBoard;
+};
+
 export function Reversi() {
-  const [board, setBoard] = useState<Board>([]);
+  const [board, setBoard] = useState<Board>(createInitialBoard());
   const [currentPlayer, setCurrentPlayer] = useState<Player>('black');
   const [aiDifficulty, setAiDifficulty] = useState<Difficulty>('medium');
   const [gameOver, setGameOver] = useState(false);
@@ -18,16 +31,7 @@ export function Reversi() {
   const { updateStats } = useReversiStats();
 
   const initializeBoard = () => {
-    const newBoard: Board = Array(BOARD_SIZE).fill(null)
-      .map(() => Array(BOARD_SIZE).fill(null));
-    
-    const mid = BOARD_SIZE / 2;
-    newBoard[mid - 1][mid - 1] = 'white';
-    newBoard[mid - 1][mid] = 'black';
-    newBoard[mid][mid - 1] = 'black';
-    newBoard[mid][mid] = 'white';
-
-    setBoard(newBoard);
+    setBoard(createInitialBoard());
     setCurrentPlayer('black');
     setGameOver(false);
   };
