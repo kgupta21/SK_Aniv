@@ -1,4 +1,4 @@
-import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car, ArrowUpDown } from 'lucide-react';
+import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car, ArrowUpDown, Users } from 'lucide-react';
 
 export const games = [
   {
@@ -21,6 +21,13 @@ export const games = [
     icon: CircleDot,
     path: '/reversi',
     color: 'from-purple-500 to-purple-700'
+  },
+  {
+    title: 'Reversi Multiplayer',
+    description: 'Play Reversi with friends in real-time!',
+    icon: Users,
+    path: '/reversi/multiplayer',
+    color: 'from-violet-500 to-fuchsia-700'
   },
   {
     title: 'Platformer',
