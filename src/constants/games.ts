@@ -1,4 +1,4 @@
-import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car, ArrowUpDown, Users } from 'lucide-react';
+import { Target, Gamepad2, CircleDot, ListTodo, Calendar, StickyNote, Mic, Car, ArrowUpDown, Users, Anchor } from 'lucide-react';
 
 export const games = [
   {
@@ -28,6 +28,13 @@ export const games = [
     icon: Users,
     path: '/reversi/multiplayer',
     color: 'from-violet-500 to-fuchsia-700'
+  },
+  {
+    title: 'Battleship',
+    description: 'Classic naval combat game with friends!',
+    icon: Anchor,
+    path: '/battleship',
+    color: 'from-blue-500 to-cyan-700'
   },
   {
     title: 'Platformer',

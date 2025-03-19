@@ -5,6 +5,7 @@ import Wordle from './games/wordle/Wordle';
 import Minesweeper from './games/minesweeper/Minesweeper';
 import Reversi from './games/reversi/Reversi';
 import { MultiplayerReversi } from './games/reversi/MultiplayerReversi';
+import { MultiplayerBattleship } from './games/battleship/MultiplayerBattleship';
 import Platformer from './games/platformer/Platformer';
 import TodoList from './components/TodoList/TodoList';
 import Calendar from './components/Calendar/Calendar';
@@ -67,6 +68,7 @@ function AppContent() {
                 <NavLink to="/minesweeper">Minesweeper</NavLink>
                 <NavLink to="/reversi">Reversi</NavLink>
                 <NavLink to="/reversi/multiplayer">Reversi MP</NavLink>
+                <NavLink to="/battleship">Battleship</NavLink>
                 <NavLink to="/platformer">Platformer</NavLink>
                 <NavLink to="/todos">Todo List</NavLink>
                 <NavLink to="/calendar">Calendar</NavLink>
@@ -94,6 +96,7 @@ function AppContent() {
             <Route path="/minesweeper" element={<Minesweeper />} />
             <Route path="/reversi" element={<Reversi />} />
             <Route path="/reversi/multiplayer" element={<MultiplayerReversi />} />
+            <Route path="/battleship" element={<MultiplayerBattleship />} />
             <Route path="/platformer" element={<Platformer />} />
             <Route path="/todos" element={
               <div className="grid gap-8 md:grid-cols-[2fr,1fr]">
